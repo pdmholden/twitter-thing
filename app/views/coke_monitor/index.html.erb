@@ -1,6 +1,23 @@
 <h1>CokeMonitor#index</h1>
 <% unless @error %>
-<p>Find me in app/views/coke_monitor/index.html.erb</p>
+<table>
+  <thead>
+    <td>Handle</td>
+    <td>Followers</td>
+    <td>Message</td>
+    <td>Sentiment</td>
+  </thead>
+  <tbody>
+    <% @tweets.each do |t| %>
+      <tr>
+      <td><%= t.user_handle%></td>
+      <td><%= t.followers%></td>
+      <td><%= t.message%></td>
+      <td><%= t.sentiment%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <% else %>
   <%= @error_message %>
 <% end %>
