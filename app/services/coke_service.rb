@@ -7,7 +7,7 @@ class CokeService
   def get_latest
     @resource = HTTP.get(ENDPOINT)
 
-    return false if http_error? || service_error?
+    return if any_error?
 
     tweets = JSON.parse(@resource.body)
     tweets.each do |tweet|
@@ -18,7 +18,6 @@ class CokeService
         sentiment: tweet["sentiment"].to_f,
         published: DateTime.parse(tweet["created_at"]))
     end
-    true
   end
 
   def http_error?
@@ -28,6 +27,15 @@ class CokeService
   def service_error?
     json = JSON.parse(@resource.body)
     json.respond_to?(:has_key?) && json.has_key?("error")
+  end
+
+  def any_error?
+    http_error? || service_error?
+  end
+
+  def error_message
+    json = JSON.parse(@resource.body)
+    json["error"]["message"]
   end
 
 end
