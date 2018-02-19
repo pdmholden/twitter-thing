@@ -11,6 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180219014105) do
+
+  create_table "tweets", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "user_handle", limit: 24
+    t.integer  "followers"
+    t.string   "message",     limit: 280
+    t.float    "sentiment"
+    t.datetime "published"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "tweets", ["published"], name: "index_tweets_on_published"
+  add_index "tweets", ["sentiment"], name: "index_tweets_on_sentiment"
 
 end

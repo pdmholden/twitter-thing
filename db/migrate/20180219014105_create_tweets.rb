@@ -8,7 +8,7 @@ class CreateTweets < ActiveRecord::Migration
       t.float :sentiment
       t.datetime :published
 
-      t.timestamps
+      t.timestamps null: false
 
       t.index [:published]
       t.index [:sentiment]
