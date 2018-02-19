@@ -5,12 +5,20 @@ class CokeService
   attr_accessor :resource
 
   def get_latest
-    @resource = nil
     @resource = HTTP.get(ENDPOINT)
 
-    return if http_error? || service_error?
+    return false if http_error? || service_error?
 
-    body = JSON.parse(@resource.body)
+    tweets = JSON.parse(@resource.body)
+    tweets.each do |tweet|
+      Tweet.create(user_id: tweet["id"].to_i,
+        user_handle: tweet["user_handle"],
+        followers: tweet["followers"].to_i,
+        message: tweet["message"],
+        sentiment: tweet["sentiment"].to_f,
+        published: DateTime.parse(tweet["created_at"]))
+    end
+    true
   end
 
   def http_error?
