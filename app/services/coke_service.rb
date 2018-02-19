@@ -2,6 +2,8 @@ class CokeService
 
   ENDPOINT = "https://devtestapiapp.herokuapp.com/tweets.json"
 
+  attr_accessor :resource
+
   def get_latest
     @resource = nil
     @resource = HTTP.get(ENDPOINT)
